@@ -42,7 +42,8 @@ def minEffort(puzzle):
     m, n = len(puzzle), len(puzzle[0])
 
     # Initialize a mirror 2d array of puzzle that will store efforts for each cell
-    effort_matrix = [([float('inf')] * n ) * m]
+    effort_matrix = [[float('inf')] * n for x in range(m)]
+    effort_matrix[0][0] = 0
 
     queue = [(0,0)]
 
@@ -51,12 +52,12 @@ def minEffort(puzzle):
         # try each valid direction
         for x_move, y_move in [(-1, 0), (0, 1), (1, 0), (0, 1)]:
             new_x, new_y = old_x + x_move, old_y + y_move
-            if m <= new_x < 0 and n <= new_y < 0:
+            if new_x < 0 or new_x >= m or new_y < 0 or new_y >= n:
                 continue
 
             # compare the max effort to get to the cell with the effort for the next step
             old_effort = effort_matrix[old_x][old_y]
-            new_effort = abs(puzzle[old_x][old_y] - puzzle[new_x[new_y]])
+            new_effort = abs(puzzle[old_x][old_y] - puzzle[new_x][new_y])
 
             # if the new route is not a better solution, move on
             if max(old_effort, new_effort) >= effort_matrix[new_x][new_y]:
@@ -69,3 +70,6 @@ def minEffort(puzzle):
     #return the effort to get to finish
     return effort_matrix[m - 1][n - 1]
 
+if __name__ == "__main__":
+    puzzle = [[1, 3, 5], [2, 8, 3], [3, 4, 5]]
+    print(minEffort(puzzle))
