@@ -19,16 +19,16 @@
 # an effort of 2.
 
 
-def is_valid(puzzle, x, y):
-    """
-    Checks if a given x,y pair is within a 2d matrix
-    :param puzzle: A 2d matrix
-    :param x: coord
-    :param y: coord
-    :return: Boolean
-    """
-    m, n = len(puzzle), len(puzzle[0])
-    return 0 <= x < m and 0 <= y < n
+# def is_valid(puzzle, x, y):
+#     """
+#     Checks if a given x,y pair is within a 2d matrix
+#     :param puzzle: A 2d matrix
+#     :param x: coord
+#     :param y: coord
+#     :return: Boolean
+#     """
+#     m, n = len(puzzle), len(puzzle[0])
+#     return 0 <= x < m and 0 <= y < n
 
 
 def minEffort(puzzle):
@@ -38,4 +38,34 @@ def minEffort(puzzle):
     like puzzle[][] = [[1, 3, 5], [2, 8, 3], [3, 4, 5]]
     :return: The minimum possible effort to solve the given puzzle.
     """
+    # store the bounds of the puzzle
+    m, n = len(puzzle), len(puzzle[0])
+
+    # Initialize a mirror 2d array of puzzle that will store efforts for each cell
+    effort_matrix = [([float('inf')] * n ) * m]
+
+    queue = [(0,0)]
+
+    while queue:  # take the next cell
+        old_x, old_y = queue.pop(0)
+        # try each valid direction
+        for x_move, y_move in [(-1, 0), (0, 1), (1, 0), (0, 1)]:
+            new_x, new_y = old_x + x_move, old_y + y_move
+            if m <= new_x < 0 and n <= new_y < 0:
+                continue
+
+            # compare the max effort to get to the cell with the effort for the next step
+            old_effort = effort_matrix[old_x][old_y]
+            new_effort = abs(puzzle[old_x][old_y] - puzzle[new_x[new_y]])
+
+            # if the new route is not a better solution, move on
+            if max(old_effort, new_effort) >= effort_matrix[new_x][new_y]:
+                continue
+
+            # Otherwise, update the effort matrix
+            effort_matrix[new_x][new_y] = max(old_effort, new_effort)
+            queue.append((new_x, new_y))
+
+    #return the effort to get to finish
+    return effort_matrix[m - 1][n - 1]
 
