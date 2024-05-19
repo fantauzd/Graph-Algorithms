@@ -47,29 +47,41 @@ def minEffort(puzzle):
 
     queue = [(0,0)]
 
-    while queue:  # take the next cell
-        old_x, old_y = queue.pop(0)
+    while queue:  # take the next cell, each iteration is in O(1)
+        old_row, old_col = queue.pop(0)
         # try each valid direction
-        for x_move, y_move in [(-1, 0), (0, 1), (1, 0), (0, 1)]:
-            new_x, new_y = old_x + x_move, old_y + y_move
-            if new_x < 0 or new_x >= m or new_y < 0 or new_y >= n:
+        for x_move, y_move in [(0, -1), (-1, 0), (0, 1), (1, 0)]:
+            new_row, new_col = old_row + x_move, old_col + y_move
+            if new_row < 0 or new_row >= m or new_col < 0 or new_col >= n:
                 continue
 
-            # compare the max effort to get to the cell with the effort for the next step
-            old_effort = effort_matrix[old_x][old_y]
-            new_effort = abs(puzzle[old_x][old_y] - puzzle[new_x][new_y])
+            # compare the max effort to get to the old cell with the effort for the next step
+            old_effort = effort_matrix[old_row][old_col]
+            new_effort = abs(puzzle[old_row][old_col] - puzzle[new_row][new_col])
 
             # if the new route is not a better solution, move on
-            if max(old_effort, new_effort) >= effort_matrix[new_x][new_y]:
+            if max(old_effort, new_effort) >= effort_matrix[new_row][new_col]:
                 continue
 
-            # Otherwise, update the effort matrix
-            effort_matrix[new_x][new_y] = max(old_effort, new_effort)
-            queue.append((new_x, new_y))
+            # Otherwise, update the effort matrix and evaluate the new cell
+            effort_matrix[new_row][new_col] = max(old_effort, new_effort)
+            queue.append((new_row, new_col))
 
     #return the effort to get to finish
     return effort_matrix[m - 1][n - 1]
 
 if __name__ == "__main__":
-    puzzle = [[1, 3, 5], [2, 8, 3], [3, 4, 5]]
-    print(minEffort(puzzle))
+    # Test cases
+    test_cases = [
+        ([[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]], 0),
+        ([[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1]], 0),
+        ([[1, 3, 5], [2, 8, 3], [3, 4, 5]], 1),
+        ([[1, 2, 2], [3, 8, 2], [5, 3, 5]], 2),
+        ([[1, 2, 2, 3], [3, 8, 2, 5], [5, 3, 4, 8]], 3),
+        ([[1, 3, 5], [3, 8, 7], [5, 3, 9], [7, 9, 6]], 3)
+    ]
+    # Run tests and print results
+    for i, (puzzle, expected) in enumerate(test_cases):
+        result = minEffort(puzzle)
+        print('puzzle: ', puzzle)
+        print(f"Test {i + 1}: {result} (Expected: {expected})")
