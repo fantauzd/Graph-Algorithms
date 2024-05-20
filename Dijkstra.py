@@ -1,7 +1,9 @@
 import heapq
 
-
+# time complexity in O((V+E)logV)
 def calculate_distances(graph, starting_vertex):
+    # We are setting the initial distance of all nodes to
+    # infinity and source node distance to 0
     distances = {vertex: float('infinity') for vertex in graph}
     distances[starting_vertex] = 0
 
