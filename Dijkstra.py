@@ -1,4 +1,7 @@
-# Dominic Fantauzzo sourced from
+# Dominic Fantauzzo
+'''
+source: https://bradfieldcs.com/algos/graphs/dijkstras-algorithm/
+'''
 
 import heapq
 
