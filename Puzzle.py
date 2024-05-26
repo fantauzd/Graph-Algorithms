@@ -38,9 +38,10 @@
 # source and destination are same return the same cell.
 
 
-
 # we will use a deque to access first and last cells
 from collections import deque
+
+
 def solve_puzzle(board, source, destination):
     """
     Solves the puzzle problem outlined above.
@@ -82,18 +83,18 @@ def solve_puzzle(board, source, destination):
             if new_row < 0 or new_row >= rows or new_col < 0 or new_col >= columns:
                 continue
             # skip any blocked cells
-            if board[new_row, new_col] == '#':
+            if board[new_row][new_col] == '#':
                 continue
             # skip cells that have already been visited
-            if not visited[[new_row][new_col]]:
-                visited[[new_row][new_col]] = True
+            if not visited[new_row][new_col]:
+                visited[new_row][new_col] = True
                 # enqueue each new neighboring cell
                 queue.append((new_row, new_col))
                 # remember that we arrived at the cell from current cell
                 previous_cell[(new_row, new_col)] = cur
 
     # previous_cell now holds all the reachable cells as keys and the prev cell as value
-    if destination not in previous_cell:        # O(N) check as prev cell might hold all cells from board, N = rows * columns
+    if destination not in previous_cell:  # O(N) check as prev cell might hold all cells from board, N = rows * columns
         return None
 
     # now we must use the previous_cell dictionary to decode the path taken to destination
@@ -106,53 +107,20 @@ def solve_puzzle(board, source, destination):
         path.append(back_step)
 
     # make sure the path starts at the first cell
-    return path.reverse()
+    res = path[::-1]
+    return res
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# importing "collections" for deque operations
-import collections
-
-# initializing deque
-de = collections.deque([1, 2, 3])
-print("deque: ", de)
-
-# using append() to insert element at right end
-# inserts 4 at the end of deque
-de.append(4)
-
-# printing modified deque
-print("\nThe deque after appending at right is : ")
-print(de)
-
-# using appendleft() to insert element at left end
-# inserts 6 at the beginning of deque
-de.appendleft(6)
-
-# printing modified deque
-print("\nThe deque after appending at left is : ")
-print(de)
+if __name__ == '__main__':
+    b1 = [
+        ['-','-','-','-','-'],
+        ['-','-','#','-','-'],
+        ['-','-','-','-','-'],
+        ['#','-','#','#','-'],
+        ['-','#','-','-','-']
+    ]
+    s1 = (0,2)
+    d1 = (2,2)
+    print(solve_puzzle(b1, s1, d1))
+    s2 = (0,0)
+    d2 = (4,4)
+    print(solve_puzzle(b1, s2, d2))
