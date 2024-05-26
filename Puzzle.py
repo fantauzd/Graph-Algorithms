@@ -132,3 +132,16 @@ if __name__ == '__main__':
     s2 = (0,0)
     d2 = (4,4)
     print(solve_puzzle(b1, s2, d2))
+    b2 = [
+        ['-', '#', '-'],
+        ['-', '-', '-'],
+        ['#', '#', '-']
+    ]
+    print(solve_puzzle(b2, s1, d1))
+    print(solve_puzzle(b2, s2, d1))
+    b3 = [
+        ['-', '#', '-'],
+        ['-', '-', '#'],
+        ['#', '#', '-']
+    ]
+    print(solve_puzzle(b3, s2, d1))
