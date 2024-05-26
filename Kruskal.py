@@ -1,7 +1,5 @@
 # Implement Kruskal's algorithm to find minimum spanning tree
-''''
-source: https://www.geeksforgeeks.org/disjoint-set-data-structures/
-'''
+
 #Pseudocode
 
 # def Kruskal(V,E):
@@ -20,6 +18,11 @@ source: https://www.geeksforgeeks.org/disjoint-set-data-structures/
 #             merge u and v trees
 #
 #     return MST
+
+''''
+source: https://www.geeksforgeeks.org/disjoint-set-data-structures/
+'''
+
 
 class DisjSet:
     def __init__(self, n):
@@ -74,3 +77,18 @@ class DisjSet:
         else:
             self.parent[yset] = xset
             self.rank[xset] = self.rank[xset] + 1
+
+
+# Driver code
+obj = DisjSet(5)
+obj.Union(0, 2)
+obj.Union(4, 2)
+obj.Union(3, 1)
+if obj.find(4) == obj.find(0):
+    print('Yes')
+else:
+    print('No')
+if obj.find(1) == obj.find(0):
+    print('Yes')
+else:
+    print('No')
