@@ -51,7 +51,7 @@ def Prims(G):
     dist[s] = 0
 
     # update neighbouring nodes of s
-    for i in len(G[s]):
+    for i in range(len(G)):
         if G[s][i] > 0:
             dist[i] = G[s][i]
             prev[i] = s
@@ -62,12 +62,20 @@ def Prims(G):
 
     # continue processing until we have visited each node
     while dist:
+        # current node is the node with the smallest weight to get to
         cur = min_key(dist)
+        # save the edge used to get to that node
         mst.append((prev[cur], cur, dist[cur]))
-        for node in len(G[cur]):
-            if G[cur][node] < dist[node]:
+        # for each node
+        for node in range(len(G[cur])):
+            # skip if there is no edge from current
+            if node not in dist.keys():
+                continue
+            # if there is a shorter edge from current than store that edge for use
+            if G[cur][node] > 0 and G[cur][node] < dist[node]:
                 dist[node] = (G[cur][node])
                 prev[node] = cur
+        # remove the current node we just visited
         dist.pop(cur)
         prev.pop(cur)
 
@@ -81,10 +89,10 @@ def min_key(D):
     :return: a key in D
     """
     # initialize to first key
-    output = D[list(D)[0]]
+    output = list(D)[0]
     # replace output when a key with lower value is found
     for key in D:
-        if D[key] < output:
+        if D[key] < D[output]:
             output = key
 
     return output
