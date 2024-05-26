@@ -64,7 +64,36 @@ def solve_puzzle(board, source, destination):
     # track previous cells in dictionary for easy overwrites
     previous_cell = {}
 
+    # try left, up, right, down
+    directions = [(0, -1), (-1, 0), (0, 1), (1, 0)]
+
+    # process each cell in the queue until we arrive at the destination
     while queue:
+        cur = queue.popleft()
+        row, col = cur[0], cur[1]
+
+        # if we reached the end, don't process cell
+        if cur == destination:
+            break
+
+        for x_move, y_move in directions:
+            new_row, new_col = row + x_move, col + y_move
+            # skip any invalid directions
+            if new_row < 0 or new_row >= rows or new_col < 0 or new_col >= columns:
+                continue
+            # skip cells that have already been visited
+            if not visited[[new_row][new_col]]:
+                visited[[new_row][new_col]] = True
+                queue.append((new_row, new_col))
+                previous_cell[(new_row, new_col)] = cur
+
+
+
+
+
+
+
+
 
 
 
