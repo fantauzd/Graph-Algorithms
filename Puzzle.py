@@ -97,6 +97,17 @@ def solve_puzzle(board, source, destination):
         return None
 
     # now we must use the previous_cell dictionary to decode the path taken to destination
+    path = [destination]
+    # backtrack until we reach the starting point
+    while path[-1] != source:
+        # find the cell before the current cell
+        back_step = previous_cell[path[-1]]
+        # add it to out path
+        path.append(back_step)
+
+
+
+
 
 
 
