@@ -103,15 +103,15 @@ def solve_puzzle(board, source, destination):
     directions_dict = {(0, -1): 'L', (-1, 0): 'U', (0, 1): 'R', (1, 0): 'D'}
     # backtrack until we reach the starting point
     while path[-1] != source:
-        # find the cell before the current cell
-        back_step = previous_cell[path[-1]]
-        # add it to out path
-        path.append(back_step)
         # find the direction taken from back step to current and add it to string
         previous_row, previous_col = previous_cell[path[-1]]
         diff_row = path[-1][0] - previous_row
         diff_col = path[-1][1] - previous_col
         path_string += directions_dict[(diff_row, diff_col)]
+        # find the cell before the current cell
+        back_step = previous_cell[path[-1]]
+        # add it to out path
+        path.append(back_step)
 
     # make sure the path and string start at the first cell
     res = path[::-1]
