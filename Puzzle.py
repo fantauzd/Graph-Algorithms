@@ -67,6 +67,7 @@ def solve_puzzle(board, source, destination):
 
     # try left, up, right, down
     directions = [(0, -1), (-1, 0), (0, 1), (1, 0)]
+    directions_dict = {(0, -1): 'L', (-1, 0): 'U',  (0, 1): 'R', (1, 0): 'D'}
 
     # process each cell in the queue until we arrive at the destination
     while queue:
@@ -95,7 +96,7 @@ def solve_puzzle(board, source, destination):
 
     # previous_cell now holds all the reachable cells as keys and the prev cell as value
     if destination not in previous_cell:  # O(N) check as prev cell might hold all cells from board, N = rows * columns
-        return None
+        return None, None
 
     # now we must use the previous_cell dictionary to decode the path taken to destination
     path = [destination]
