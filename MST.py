@@ -37,3 +37,56 @@ def Prims(G):
     :return: a list of tuples, wherein each tuple represents an edge of the MST as (v1, v2,weight), like:
     (0, 2, 5), (2, 3, 3), (3, 1, 2), (3, 4, 12), (2, 5, 16), (4, 6, 4)]
     '''
+    dist = {}
+    prev = {}
+    mst = []
+
+    # start at the first vertex, at index 0
+    s = 0
+
+    # add all vertices to dist, prev
+    for v in G:
+        dist[v] = float('infinity')
+        prev[v] = ''
+
+    # initialize source
+    dist[s] = 0
+
+    # update neighbouring nodes of s
+    for i in len(G[s]):
+        if G[s][i] > 0:
+            dist[i] = G[s][i]
+            prev[i] = s
+
+    # since we processed s, we have visited it. remove it from consideration
+    dist.pop(s)
+    prev.pop(s)
+
+    # continue processing until we have visited each node
+    while dist:
+        cur = min_key(dist)
+        mst.append((prev[cur], cur, dist[cur]))
+        for node in len(G[cur]):
+            if G[cur][node] < dist[node]:
+                dist[node] = (G[cur][node])
+                prev[node] = cur
+        dist.pop(cur)
+        prev.pop(cur)
+
+    return mst
+
+
+def min_key(D):
+    """
+    Returns the key holding the smallest value in O(N)
+    :param D: a dictionary with numbers for its values
+    :return: a key in D
+    """
+    # initialize to first key
+    output = D[list(D)[0]]
+    # replace output when a key with lower value is found
+    for key in D:
+        if D[key] < output:
+            output = key
+
+    return output
