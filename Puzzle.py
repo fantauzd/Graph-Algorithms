@@ -105,6 +105,9 @@ def solve_puzzle(board, source, destination):
         # add it to out path
         path.append(back_step)
 
+    # make sure the path starts at the first cell
+    return path.reverse()
+
 
 
 
