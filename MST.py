@@ -21,8 +21,6 @@
 # Note: the order of edge tuples within the output does not matter; additionally, the
 # order of vertices within each edge does not matter.
 
-import heapq
-
 def Prims(G):
     '''
     Implements Prim's algorithm.
@@ -45,8 +43,8 @@ def Prims(G):
     s = 0
 
     # add all vertices to dist, prev
-    for v in G:
-        dist[v] = float('infinity')
+    for v in range(len(G)):
+        dist[v] = (float('inf'))
         prev[v] = ''
 
     # initialize source
