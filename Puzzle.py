@@ -81,11 +81,24 @@ def solve_puzzle(board, source, destination):
             # skip any invalid directions
             if new_row < 0 or new_row >= rows or new_col < 0 or new_col >= columns:
                 continue
+            # skip any blocked cells
+            if board[new_row, new_col] == '#':
+                continue
             # skip cells that have already been visited
             if not visited[[new_row][new_col]]:
                 visited[[new_row][new_col]] = True
+                # enqueue each new neighboring cell
                 queue.append((new_row, new_col))
+                # remember that we arrived at the cell from current cell
                 previous_cell[(new_row, new_col)] = cur
+
+    # previous_cell now holds all the reachable cells as keys and the prev cell as value
+    if destination not in previous_cell:        # O(N) check as prev cell might hold all cells from board, N = rows * columns
+        return None
+
+    # now we must use the previous_cell dictionary to decode the path taken to destination
+
+
 
 
 
