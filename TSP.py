@@ -46,3 +46,15 @@ def solve_tsp(G):
     #return back to the start for cycle
     res.append(0)
     return res
+
+if __name__ == '__main__':
+    G1 = [
+        [0, 2, 3, 20, 1],
+        [2, 0, 15, 2, 20],
+        [3, 15, 0, 20, 13],
+        [20, 2, 20, 0, 9],
+        [1, 20, 13, 9, 0]
+    ]
+
+    p1 = solve_tsp(G1)
+    print(p1)
